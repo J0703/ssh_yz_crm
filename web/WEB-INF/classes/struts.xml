@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.objectFactory" value="spring"/>
+
+    <!--部门管理-->
+    <package name="depart" extends="json-default">
+        <action name="department" class="departmentAction" method="findAll">
+            <result name="success">/pages/department/listDepartment.jsp</result>
+            <!--<result name="error">/pages/department/listDepartment.jsp</result>-->
+        </action>
+
+        <action name="departById" class="departmentAction" method="findById">
+            <result name="success">/pages/department/addOrEditDepartment.jsp</result>
+        </action>
+
+        <action name="saveOrUpdate" class="departmentAction" method="saveOrUpdate">
+            <result type="redirectAction">department</result>
+        </action>
+    </package>
+
+    <!--职务管理-->
+    <package name="post" extends="json-default">
+        <action name="posts" class="postAction" method="findAll">
+            <result name="success">/pages/post/listPost.jsp</result>
+        </action>
+    </package>
+</struts>

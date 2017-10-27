@@ -1,0 +1,17 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lanou.staff.domain.Staff" table="crm_staff">
+        <id name="staffId">
+            <generator class="uuid"/>
+        </id>
+        <property name="loginName" length="100"/>
+        <property name="loginPwd" length="100"/>
+        <property name="staffName" length="100"/>
+        <property name="gender" length="20"/>
+        <property name="onDutyDate"/>
+        
+        <many-to-one name="postID" class="com.lanou.staff.domain.Post" lazy="false" column="postID" cascade="all"/>
+    </class>
+</hibernate-mapping>

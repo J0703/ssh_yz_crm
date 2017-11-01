@@ -2,6 +2,7 @@ package com.lanou.staff.service.impl;
 
 
 import com.lanou.staff.dao.PostDao;
+import com.lanou.staff.domain.PageBean;
 import com.lanou.staff.domain.Post;
 import com.lanou.staff.service.PostService;
 
@@ -14,24 +15,18 @@ public class PostServiceImpl implements PostService {
     private PostDao postDao;
 
     @Override
-    public List<Post> findAll() {
-        String hql = "from Post";
-        return postDao.findAll(hql);
-    }
-    @Override
-    public void save(Post post) {
-        postDao.save(post);
+    public PageBean<Post> findAll(int pc, int ps) {
+        return postDao.findPagingAll(pc,ps);
     }
 
     @Override
-    public List<Post> find(String hql, Object[] params) {
-
-        return postDao.find(hql,params);
-    }
-
-    @Override
-    public Post findById(int pid) {
+    public Post findById(String pid) {
         return postDao.findById(pid);
+    }
+
+    @Override
+    public void saveOrUpdate(Post post) {
+        postDao.saveOrUpdate(post);
     }
 
 

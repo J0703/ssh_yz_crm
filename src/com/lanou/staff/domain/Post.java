@@ -5,9 +5,10 @@ package com.lanou.staff.domain;
  */
 public class Post {
 
-    private String postId;
-    private String postName;
-    private String depId;
+    private String postId;//主键 职务 id
+    private String postName;// 职务名
+
+    private Department department;
 
     public Post(){
 
@@ -17,17 +18,11 @@ public class Post {
         this.postName = postName;
     }
 
-    public Post(String postName, String depId) {
-        this.postName = postName;
-        this.depId = depId;
-    }
-
     @Override
     public String toString() {
         return "Post{" +
                 "postId='" + postId + '\'' +
-                ", postName='" + postName + '\'' +
-                ", depId=" + depId +
+                ", postName='" + postName +
                 '}';
     }
 
@@ -47,11 +42,11 @@ public class Post {
         this.postName = postName;
     }
 
-    public String getDepId() {
-        return depId;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepId(String depId) {
-        this.depId = depId;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

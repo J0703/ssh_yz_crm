@@ -2,6 +2,7 @@ package com.lanou.staff.service;
 
 
 import com.lanou.staff.domain.Department;
+import com.lanou.staff.domain.PageBean;
 
 import java.util.List;
 
@@ -11,6 +12,8 @@ import java.util.List;
 public interface DepartmentService {
 
     List<Department> findAll();
+
+    PageBean<Department> findPagingAll(int pc, int ps);
 
     Department findById(String depID);
 

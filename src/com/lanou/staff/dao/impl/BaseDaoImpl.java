@@ -2,11 +2,14 @@ package com.lanou.staff.dao.impl;
 
 
 import com.lanou.staff.dao.BaseDao;
+import com.lanou.staff.domain.PageBean;
+import org.hibernate.Query;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 蓝鸥科技有限公司  www.lanou3g.com.
@@ -45,21 +48,46 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
     }
 
     @Override
-    public List<T> findAll(String hql) {
-        List<T> tList = (List<T>) getHibernateTemplate().find(hql);
+    public List<T> findAll() {
+        List<T> tList = (List<T>) getHibernateTemplate().find("from "+beanClass.getName());
         return tList;
     }
 
     @Override
-    public List<T> find(String hql, Object[] params) {
-        List<T> tList = (List<T>) getHibernateTemplate().find(hql,params);
+    public List<T> find(String hql, Object... params) {
+        List<T> tList = (List<T>) getHibernateTemplate().find("from " + beanClass.getName() + " where 1=1" + hql, params);
         return tList;
+    }
+
+    @Override
+    public T findSingle(String hql, Object... params) {
+        T t = (T) this.getHibernateTemplate().find("from " + beanClass.getName() + " where 1=1" + hql, params);
+        return t;
+    }
+
+    @Override
+    public PageBean<T> findPagingAll(int pc,int ps) {
+        PageBean<T> pb = new PageBean<T>();
+        pb.setPc(pc);
+        pb.setPs(ps);
+        String hql = "select count(*) from "+beanClass.getName()+" where 1=1";
+        Number count = (Number) getHibernateTemplate().find(hql).listIterator().next();
+        int tr = count.intValue();
+        System.out.println(tr);
+        pb.setTr(tr);
+        String hql1 = "from "+beanClass.getName();
+        Query query = currentSession().createQuery(hql1);
+
+        query.setFirstResult((pc-1)*ps);
+        query.setMaxResults(ps);
+        List<T> tList = query.list();
+        pb.setBeanList(tList);
+        return pb;
     }
 
     @Override
     public void saveOrUpdate(T t) {
         getHibernateTemplate().saveOrUpdate(t);
     }
-
 
 }

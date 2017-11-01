@@ -3,9 +3,18 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="com.lanou.staff.domain.Department" table="crm_department">
-        <id name="depID">
+        <id name="depID" column="depId">
             <generator class="uuid"/>
         </id>
         <property name="depName" length="50"/>
+        <set name="posts"
+             inverse="true"
+             lazy="false"
+             cascade="all">
+
+            <key column="depId"/>
+
+            <one-to-many class="com.lanou.staff.domain.Post"/>
+        </set>
     </class>
 </hibernate-mapping>

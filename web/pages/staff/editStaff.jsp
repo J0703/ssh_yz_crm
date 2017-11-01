@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -33,49 +35,108 @@
   </tr>
 </table>
 
-<form action="/crm2/staff/staffAction_edit.action" method="post">
+<form action="${pageContext.request.contextPath}/staffSaveOrUpdate.action" method="post">
 	
-	<input type="hidden" name="staffId" value="2c9091c14c78e58b014c78e7ecd90007"/>
+	<input type="hidden" name="staffId" value="${staff.staffId}"/>
 	
 	<table width="88%" border="0" class="emp_table" style="width:80%;">
 	 <tr>
 	    <td>登录名：</td>
-	    <td><input type="text" name="loginName" value="赵六" /> </td>
+	    <td><input type="text" name="loginName" value="${staff.loginName}" /> </td>
 	    <td>密码：</td>
-	    <td><input type="password" name="loginPwd" value="54dfc11c8e9c49bab6068f473f913be9" /> </td>
+	    <td><input type="password" name="loginPwd" value="${staff.loginPwd}" /> </td>
 	  </tr>
 	 <tr>
 	    <td>姓名：</td>
-	    <td><input type="text" name="staffName" value="赵六" /> </td>
+	    <td><input type="text" name="staffName" value="${staff.staffName}" /> </td>
 	    <td>性别：</td>
 	    <td>
-	    	<input type="radio" name="gender" checked="checked" value="男"/>男
-	    	<input type="radio" name="gender" value="女"/>女
+	    	<input type="radio" name="gender" value="男"
+				   <c:if test="${requestScope.staff.gender=='男'}">
+					   checked='checked'
+				   </c:if>
+				    />男
+	    	<input type="radio" name="gender" value="女"
+					<c:if test="${requestScope.staff.gender=='女'}">
+						checked='checked'
+					</c:if>
+				   />女
 	    </td>
 	  </tr>
 	 <tr>
 	    <td width="10%">所属部门：</td>
 	    <td width="20%">
-	    	<select name="crmPost.crmDepartment.depId"  onchange="changePost(this)">
+	    	<select name="post.department.depID" onchange="changePost(this)">
 			    <option value="">----请--选--择----</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000001" selected="selected">教学部</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000002">咨询部</option>
+				<s:iterator value="#session.departments" var="depart">
+					<option value="${depart.depID}"
+					<c:if test="${staff.post.department.depID eq depart.depID}">
+						selected="selected"
+					</c:if>>${depart.depName}</option>
+				</s:iterator>
+			    <%--<option value="ee050687bd1a4455a153d7bbb7000001" selected="selected">教学部</option>--%>
+			    <%--<option value="ee050687bd1a4455a153d7bbb7000002">咨询部</option>--%>
 			</select>
 
 	    </td>
 	    <td width="8%">职务：</td>
 	    <td width="62%">
-	    	<select name="crmPost.postId" id="postSelectId">
+	    	<select name="post.postId" id="postSelectId">
 			    <option value="">----请--选--择----</option>
-			    <option value="2c9091c14c78e58b014c78e6b34a0003">总监</option>
-			    <option value="2c9091c14c78e58b014c78e6d4510004" selected="selected">讲师</option>
+				<s:iterator value="#attr.staff.post.department.posts" var="post">
+					<option value="${post.postId}"
+							<c:if test="${staff.post.postId eq post.postId}">
+								selected="selected"
+							</c:if>>${post.postName}</option>
+				</s:iterator>
+			    <%--<option value="2c9091c14c78e58b014c78e6b34a0003">总监</option>--%>
+			    <%--<option value="2c9091c14c78e58b014c78e6d4510004" selected="selected">讲师</option>--%>
+				<script type="text/javascript">
+					function createXMLHttpRequest() {
+						try {
+							return new XMLHttpRequest();
+						} catch (e) {
+							try {
+								return new ActiveXObject("Msxml2.HTTP");
+							} catch (e) {
+								try {
+									return new ActiveXObject("Microsoft.HTTP");
+								} catch (e) {
+									throw e;
+								}
+							}
+						}
+					}
+					function changePost(obj) {
+
+						var departId = obj.value;
+						var httpRequest = createXMLHttpRequest();
+						var url = "${pageContext.request.contextPath}/findPost.action";
+						httpRequest.open("POST", url, true);
+						httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+						httpRequest.send("depId=" + departId);
+						httpRequest.onreadystatechange = function () {
+							if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+								var jsonData = eval("(" + httpRequest.responseText + ")");
+								var postSelect = document.getElementById("postSelectId");
+								postSelect.innerHTML = "<option value='-1'>----请--选--择----</option>";
+								for (var i = 0; i < jsonData.length; i++) {
+									var id = jsonData[i].postId;
+									var postName = jsonData[i].postName;
+									postSelect.innerHTML += "<option value='" + id + "'>" + postName + "</option>";
+								}
+							}
+						}
+
+					}
+				</script>
 			</select>
 	    </td>
 	  </tr>
 	  <tr>
 	    <td width="10%">入职时间：</td>
 	    <td width="20%">
-	    	<input type="text" name="onDutyDate" value="2012-02-12" readonly="readonly" onfocus="c.showMoreDay=true; c.show(this);"/>
+	    	<input type="text" name="onDutyDate" value="${staff.onDutyDate}" readonly="readonly" onfocus="c.showMoreDay=true; c.show(this);"/>
 	    </td>
 	    <td width="8%"></td>
 	    <td width="62%"></td>

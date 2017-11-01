@@ -7,34 +7,25 @@ import java.util.Date;
  */
 public class Staff {
 
-    private String staffId;
-    private String loginName;
-    private String loginPwd;
-    private String staffName;
-    private String gender;
-    private Date onDutyDate;
-    private Post postID;
+    private String staffId;// 员工 id
+    private String loginName;// 登录名
+    private String loginPwd;// 登录密码
+    private String staffName;// 员工名
+    private String gender;// 性别
+    private Date onDutyDate;// 入职时间
+    private Post post;// 职务
 
     public Staff() {
     }
 
-    public Staff(String staffId, String loginName, String loginPwd, String staffName, String gender, Date onDutyDate, Post postID) {
-        this.staffId = staffId;
-        this.loginName = loginName;
-        this.loginPwd = loginPwd;
-        this.staffName = staffName;
-        this.gender = gender;
-        this.onDutyDate = onDutyDate;
-        this.postID = postID;
-    }
 
-    public Staff(String loginName, String loginPwd, String staffName, String gender, Date onDutyDate, Post postID) {
+    public Staff(String loginName, String loginPwd, String staffName, String gender, Date onDutyDate, Post post) {
         this.loginName = loginName;
         this.loginPwd = loginPwd;
         this.staffName = staffName;
         this.gender = gender;
         this.onDutyDate = onDutyDate;
-        this.postID = postID;
+        this.post = post;
     }
 
     public Staff(String loginName) {
@@ -50,7 +41,7 @@ public class Staff {
                 ", staffName='" + staffName + '\'' +
                 ", gender='" + gender + '\'' +
                 ", onDutyDate='" + onDutyDate + '\'' +
-                ", postID=" + postID +
+                ", post=" + post +
                 '}';
     }
 
@@ -102,12 +93,12 @@ public class Staff {
         this.onDutyDate = onDutyDate;
     }
 
-    public Post getPostID() {
-        return postID;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPostID(Post postID) {
-        this.postID = postID;
+    public void setPost(Post post) {
+        this.post = post;
     }
 }
 

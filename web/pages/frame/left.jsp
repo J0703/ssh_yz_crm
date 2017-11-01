@@ -22,14 +22,14 @@
 		d.add('010203','0102','学生流失情况','${pageContext.request.contextPath}/pages/runoff/listRunoff.jsp','','right');		
 		d.add('0103','01','教研部');
 		<%-- 班级前缀和包结构命名：classesm ，其他命名class --%>
-		d.add('010301','0103','班级管理','${pageContext.request.contextPath}/pages/classesm/listClass.jsp','','right');
+		d.add('010301','0103','班级管理','${pageContext.request.contextPath}/classesFindAll.action','','right');
 		d.add('010302','0103','课程类别','${pageContext.request.contextPath}/pages/coursetype/listCourse.jsp','','right');
 		d.add('0104','01','就业部');
 		d.add('010401','0104','就业情况','${pageContext.request.contextPath}/pages/graduate/listGraduate.jsp','','right');
 		d.add('0105','01','人力资源部');
 		d.add('010501','0105','部门管理','${pageContext.request.contextPath}/department.action','','right');
 		d.add('010502','0105','职务管理','${pageContext.request.contextPath}/posts.action','','right');
-		d.add('010503','0105','员工管理','${pageContext.request.contextPath}/pages/staff/listStaff.jsp','','right');
+		d.add('010503','0105','员工管理','${pageContext.request.contextPath}/staffs.action','','right');
 		
 		document.write(d);
 	</script>

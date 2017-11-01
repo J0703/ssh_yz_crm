@@ -1,7 +1,10 @@
 package com.lanou.staff.dao;
 
+import com.lanou.staff.domain.PageBean;
+
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 蓝鸥科技有限公司  www.lanou3g.com.
@@ -41,7 +44,7 @@ public interface BaseDao<T> {
      *
      * @return 查询到的结果集合
      **/
-    List<T> findAll(String hql);
+    List<T> findAll();
 
     /**
      * 根据条件查询，返回查询到的结果集合
@@ -50,10 +53,12 @@ public interface BaseDao<T> {
      * @param params 查询语句的参数列表
      * @return 查询到的结果集合
      **/
-    List<T> find(String hql, Object[] params);
+    List<T> find(String hql, Object... params);
 
+    T findSingle(String hql, Object... params);
+
+    PageBean<T> findPagingAll(int pc,int ps);
 
     void saveOrUpdate(T t);
-
 
 }

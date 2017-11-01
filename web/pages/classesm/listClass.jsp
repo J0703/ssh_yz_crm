@@ -1,3 +1,5 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -22,7 +24,7 @@
     <td width="42%"align="center">&nbsp;</td>
     <td width="36%"align="right">
     	<%--添加班级  /html/classesm/addClass.jsp--%>
-    	<a href="${pageContext.request.contextPath}/pages/classesm/addOrEditClass.jsp">
+    	<a href="${pageContext.request.contextPath}/showCourse.action">
     		<img src="${pageContext.request.contextPath}/images/button/tianjia.gif" class="img"/>
     	</a>
     	<%--高级查询 
@@ -62,46 +64,37 @@
   </tr>
   </thead>
   <tbody>
-	  <tr class="tabtd2">
-	    <td align="center">J161001期</td>
-	    <td align="center">JavaEE </td>
-	    <td align="center">2016-10-10</td>
-	    <td align="center">2016-11-1</td>
-	    <td align="center">已结束</td>
-	    <td align="center">1 </td>
-	    <td align="center">2 </td>
-	    <td align="center">0 </td>
-	    <td align="center">
-	    	<a href="${pageContext.request.contextPath}/pages/classesm/addOrEditClass.jsp"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
-	    </td>
-		<td align="center">
-	    	<a href="${pageContext.request.contextPath}/pages/classesm/showClass.jsp"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
-		</td>
-		<td align="center" title="上次上传时间：2015-04-02">   
-			<a href="${pageContext.request.contextPath}/pages/classesm/uploadClass.jsp">上传</a>
-			<a href="${pageContext.request.contextPath}/pages/classesm/downloadClass">下载</a> <br/>
-		</td>
+  <s:iterator value="#attr.pb.beanList" var="clazz" status="st">
+	  <s:if test="#st.Even">
+		  <tr class="tabtd1">
+	  </s:if>
+	  <s:else>
+		  <tr class="tabtd2">
+	  </s:else>
+	  <td align="center">${clazz.name}</td>
+	  <td align="center">${clazz.course.courseName}</td>
+	  <td align="center">${clazz.beginTime}</td>
+	  <td align="center">${clazz.endTime}</td>
+	  <td align="center">${clazz.status}</td>
+	  <td align="center">${clazz.totalCount}</td>
+	  <td align="center">${clazz.upgradeCount}</td>
+	  <td align="center">${clazz.changeCount} </td>
+	  <td align="center">
+		  <a href="${pageContext.request.contextPath}/classesFindById.action?classId=${clazz.classId}"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+	  </td>
+	  <td align="center">
+		  <a href="${pageContext.request.contextPath}/pages/classesm/showClass.jsp"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
+	  </td>
+	  <td align="center" title="上次上传时间：2015-04-02">
+		  <a href="${pageContext.request.contextPath}/pages/classesm/uploadClass.jsp">上传</a>
+		  <a href="${pageContext.request.contextPath}/pages/classesm/downloadClass">下载</a> <br/>
+	  </td>
 	  </tr>
-	  <tr class="tabtd1">
-	    <td align="center">J161002期</td>
-	    <td align="center">JavaEE </td>
-	    <td align="center">2016-11-10</td>
-	    <td align="center">2016-12-10</td>
-	    <td align="center">已开班</td>
-	    <td align="center">0 </td>
-	    <td align="center">0 </td>
-	    <td align="center">0 </td>
-	    <td align="center">
-	    	<a href="${pageContext.request.contextPath}/classesm/classAction_preAddOrEdit.action?classId=2c9091c14c78e58b014c78e9106e000b"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
-	    </td>
-		<td align="center">
-	    	<a href="${pageContext.request.contextPath}/classesm/classAction_findById.action?classId=2c9091c14c78e58b014c78e9106e000b"><img src="${pageContext.request.contextPath}/images/button/modify.gif" class="img"/></a>
-		</td>
-		<td align="center" title="上次上传时间：">   
-			<a href="${pageContext.request.contextPath}/classesm/classAction_preUpload.action?classId=2c9091c14c78e58b014c78e9106e000b">上传</a>
-			 暂无
-		</td>
-	  </tr>
+  </s:iterator>
+
+
+
+
   
   </tbody>
 </table>
@@ -110,12 +103,50 @@
 <table border="0" cellspacing="0" cellpadding="0" align="center">
   <tr>
     <td align="right">
-    	<span>第1/3页</span>
-        <span>
-        	<a href="#">[首页]</a>&nbsp;&nbsp;
-            <a href="#">[上一页]</a>&nbsp;&nbsp;
-            <a href="#">[下一页]</a>&nbsp;&nbsp;
-            <a href="#">[尾页]</a>
+    	<span>
+            第${pb.pc}页/共${pb.tp}页
+            <a href="classesFindAll.action">[首页]</a>
+            <c:if test="${pb.pc > 1}">
+				<a href="classesFindAll.action?pc=${pb.pc-1}">[上一页]</a>
+			</c:if>
+
+            <c:choose>
+				<c:when test="${pb.tp <= 10}">
+					<c:set var="begin" value="1"/>
+					<c:set var="end" value="${pb.tp}"/>
+				</c:when>
+				<c:otherwise>
+					<c:set var="begin" value="${pb.pc-5}"/>
+					<c:set var="end" value="${pb.pc+4}"/>
+					<%-- 头溢出 --%>
+					<c:if test="${begin < 1}">
+						<c:set var="begin" value="1"/>
+						<c:set var="end" value="10"/>
+					</c:if>
+					<%-- 尾溢出 --%>
+					<c:if test="${end > pb.tp}">
+						<c:set var="begin" value="${pb.tp - 9}"/>
+						<c:set var="end" value="${pb.tp}"/>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+	<c:forEach var="i" begin="${begin}" end="${end}">
+		<c:choose>
+			<c:when test="${pb.pc eq i}">
+				[${i}]
+			</c:when>
+			<c:otherwise>
+				<a href="classesFindAll.action?pc=${i}">${i}</a>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+
+
+
+<c:if test="${pb.pc < pb.tp}">
+	<a href="classesFindAll.action?pc=${pb.pc+1}">[下一页]</a>
+</c:if>
+  <a href="classesFindAll.action?pc=${pb.tp}">[尾页]</a>
         </span>
     </td>
   </tr>

@@ -5,7 +5,7 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <context:component-scan base-package="com.lanou.staff"/>
+    <context:component-scan base-package="com.lanou"/>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -28,6 +28,8 @@
                 <value>classpath:resources/Staff.hbm.xml</value>
                 <value>classpath:resources/Department.hbm.xml</value>
                 <value>classpath:resources/Post.hbm.xml</value>
+                <value>classpath:resources/Classes.hbm.xml</value>
+                <value>classpath:resources/Course.hbm.xml</value>
             </list>
         </property>
     </bean>
@@ -46,10 +48,15 @@
     </tx:advice>
 
     <aop:config>
-        <aop:pointcut id="pointcut" expression="execution(* com.lanou.staff.service.impl.*.*(..))"/>
+        <aop:pointcut id="pointcut" expression="execution(* com.lanou..service.impl.*.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
     </aop:config>
 
+    <!--<aop:config>-->
+        <!--<aop:pointcut id="pointcut" expression="execution(* com.lanou.teach.service.impl.*.*(..))"/>-->
+        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>-->
+    <!--</aop:config>-->
+    <!--人力资源部-->
     <bean id="departmentDao" class="com.lanou.staff.dao.impl.DepartmentDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -66,5 +73,24 @@
     <bean id="postService" class="com.lanou.staff.service.impl.PostServiceImpl">
         <property name="postDao" ref="postDao"/>
     </bean>
+    <bean id="staffService" class="com.lanou.staff.service.impl.StaffServiceImpl">
+        <property name="staffDao" ref="staffDao"/>
+    </bean>
 
+
+    <!--教研部-->
+    <bean id="classesDao" class="com.lanou.teach.dao.impl.ClassesDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean id="courseDao" class="com.lanou.teach.dao.impl.CourseDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="classesService" class="com.lanou.teach.service.impl.ClassesServiceImpl">
+        <property name="classesDao" ref="classesDao"/>
+    </bean>
+
+    <bean id="courseService" class="com.lanou.teach.service.impl.CourseServiceImpl">
+        <property name="courseDao" ref="courseDao"/>
+    </bean>
 </beans>

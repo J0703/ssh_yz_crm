@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -34,7 +35,7 @@
   </tr>
 </table>
 
-<form action="${pageContext.request.contextPath}/pages/staff/listStaff.jsp" method="post">
+<form action="${pageContext.request.contextPath}/staffSaveOrUpdate.action" method="post">
 	<table width="88%" border="0" class="emp_table" style="width:80%;">
 	 <tr>
 	    <td>登录名：</td>
@@ -44,7 +45,7 @@
 	  </tr>
 	 <tr>
 	    <td>姓名：</td>
-	    <td><input type="text" name="staffName" value="" id="staffAction_add_staffName"/> </td>
+	    <td><input type="text" name="staffName" value=""/> </td>
 	    <td>性别：</td>
 	    <td><input type="radio" name="gender"  value="男"/>男
 	    	<input type="radio" name="gender"  value="女"/>女
@@ -53,17 +54,57 @@
 	 <tr>
 	    <td width="10%">所属部门：</td>
 	    <td width="20%">
-	    	<select name="crmPost.crmDepartment.depId"onchange="changePost(this)">
+	    	<select name="post.department.depID"onchange="changePost(this)">
 			    <option value="">----请--选--择----</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000001">教学部</option>
-			    <option value="ee050687bd1a4455a153d7bbb7000002">咨询部</option>
+				<s:iterator value="#session.departments" var="depart">
+					<option value="${depart.depID}">${depart.depName}</option>
+				</s:iterator>
 			</select>
 
 	    </td>
 	    <td width="8%">职务：</td>
 	    <td width="62%">
-	    	<select id="postSelectId" name="crmPost.postId">
+	    	<select id="postSelectId" name="post.postId">
 	    		<option>----请--选--择----</option>
+				<script type="text/javascript">
+					function createXMLHttpRequest() {
+						try {
+							return new XMLHttpRequest();
+						} catch (e) {
+							try {
+								return new ActiveXObject("Msxml2.HTTP");
+							} catch (e) {
+								try {
+									return new ActiveXObject("Microsoft.HTTP");
+								} catch (e) {
+									throw e;
+								}
+							}
+						}
+					}
+					function changePost(obj) {
+
+						var departId = obj.value;
+						var httpRequest = createXMLHttpRequest();
+						var url = "${pageContext.request.contextPath}/findPost.action";
+						httpRequest.open("POST", url, true);
+						httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+						httpRequest.send("depId=" + departId);
+						httpRequest.onreadystatechange = function () {
+							if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+								var jsonData = eval("(" + httpRequest.responseText + ")");
+								var postSelect = document.getElementById("postSelectId");
+								postSelect.innerHTML = "<option value='-1'>----请--选--择----</option>";
+								for (var i = 0; i < jsonData.length; i++) {
+									var id = jsonData[i].postId;
+									var postName = jsonData[i].postName;
+									postSelect.innerHTML += "<option value='" + id + "'>" + postName + "</option>";
+								}
+							}
+						}
+
+					}
+				</script>
 	    	</select>
 	    </td>
 	  </tr>

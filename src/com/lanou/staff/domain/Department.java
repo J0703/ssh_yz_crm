@@ -8,8 +8,8 @@ import java.util.Set;
  */
 public class Department {
 
-    private String depID;
-    private String depName;
+    private String depID;//主键 部门 id
+    private String depName;// 部门名
 
     private Set<Post> posts = new HashSet<>();
 

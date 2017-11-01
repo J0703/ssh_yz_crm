@@ -2,6 +2,7 @@ package com.lanou.staff.service.impl;
 
 import com.lanou.staff.dao.DepartmentDao;
 import com.lanou.staff.domain.Department;
+import com.lanou.staff.domain.PageBean;
 import com.lanou.staff.service.DepartmentService;
 
 import java.util.List;
@@ -15,8 +16,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Department> findAll() {
-        String hql = "from Department";
-        return departmentDao.findAll(hql);
+        return departmentDao.findAll();
+    }
+
+    @Override
+    public PageBean<Department> findPagingAll(int pc,int ps) {
+        return departmentDao.findPagingAll(pc, ps);
     }
 
     @Override

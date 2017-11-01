@@ -1,6 +1,7 @@
 package com.lanou.staff.service;
 
 
+import com.lanou.staff.domain.PageBean;
 import com.lanou.staff.domain.Post;
 
 import java.util.List;
@@ -10,12 +11,10 @@ import java.util.List;
  */
 public interface PostService {
 
-    List<Post> findAll();
+    PageBean<Post> findAll(int pc, int ps);
 
-    void save(Post post);
+    Post findById(String pid);
 
-    List<Post> find(String hql, Object[] params);
-
-    Post findById(int pid);
+    void saveOrUpdate(Post post);
 
 }

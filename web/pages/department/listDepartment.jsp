@@ -26,7 +26,7 @@
 
         <td width="57%" align="right">
             <%--添加部门 --%>
-            <a href="${pageContext.request.contextPath}/pages/department/addOrEditDepartment.jsp">
+            <a href="${pageContext.request.contextPath}/addDepart.action">
                 <img src="${pageContext.request.contextPath}/images/button/tianjia.gif"/>
             </a>
 

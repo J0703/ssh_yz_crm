@@ -96,7 +96,7 @@
 								<tr>
 									<td width="51" valign="middle">
 										<font color="#FFFFFF">
-											欢迎您： ${sessionScope.staff.staffName}
+											欢迎您： ${applicationScope.staff.staffName}
 										</font>
 									</td>
 								</tr>

@@ -9,16 +9,24 @@
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.objectFactory" value="spring"/>
 
+    <package name="myInterceptor" extends="struts-default">
+
+    </package>
+
 
     <package name="ssh_crm" extends="json-default,struts-default">
 
         <!--拦截器-->
         <interceptors>
-            <interceptor name="loginCheck" class="com.lanou.staff.interceptor.LoginInterceptor">
+            <interceptor name="actionCheck" class="com.lanou.base_util.interceptor.PostActionInterceptor">
+                <param name="excludeMethods">login,findAll,departFindAll,findPost,findStaff,modPwd,resetLogin</param>
+            </interceptor>
+            <interceptor name="loginCheck" class="com.lanou.base_util.interceptor.LoginInterceptor">
                 <param name="excludeMethods">login</param>
             </interceptor>
             <interceptor-stack name="myInterceptorStack">
                 <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="actionCheck"/>
                 <interceptor-ref name="loginCheck"/>
             </interceptor-stack>
         </interceptors>
@@ -27,64 +35,77 @@
 
         <global-results>
             <result name="login">/pages/login.jsp</result>
+            <result name="pass">/pages/unGrant.jsp</result>
         </global-results>
 
         <!--部门管理-->
+        <!--查询所有部门-->
         <action name="department" class="departmentAction" method="findAll">
             <result name="success">/pages/department/listDepartment.jsp</result>
             <!--<result name="error">/pages/department/listDepartment.jsp</result>-->
         </action>
-
+        <!--编辑,回显部门-->
         <action name="departById" class="departmentAction" method="findById">
             <result name="success">/pages/department/addOrEditDepartment.jsp</result>
         </action>
-
+        <!--点击添加按钮-->
+        <action name="addDepart" class="departmentAction" method="addDepart">
+            <result name="success">/pages/department/addOrEditDepartment.jsp</result>
+        </action>
+        <!--添加/更新 部门-->
         <action name="saveOrUpdate" class="departmentAction" method="saveOrUpdate">
             <result type="redirectAction">department</result>
         </action>
 
 
         <!--职务管理-->
+        <!--查询所有职务-->
         <action name="posts" class="postAction" method="findAll">
             <result name="success">/pages/post/listPost.jsp</result>
         </action>
+        <!--编辑,回显职务-->
         <action name="postById" class="postAction" method="findById">
             <result name="success">/pages/post/addOrEditPost.jsp</result>
         </action>
+        <!--保存或更新 职务-->
         <action name="postSaveOrUpdate" class="postAction" method="saveOrUpdate">
             <result name="success" type="redirectAction">posts</result>
         </action>
+        <!--编辑页面回显部门下拉列表-->
         <action name="showDepartments" class="postAction" method="showDepartments">
             <result name="success">/pages/post/addOrEditPost.jsp</result>
         </action>
 
 
         <!--员工管理-->
+        <!--查询所有员工,并且下拉列表加载所有部门-->
         <action name="staffs" class="staffAction" method="departFindAll">
-            <result name="success" type="redirect">/pages/staff/listStaff.jsp</result>
+            <result name="success">/pages/staff/listStaff.jsp</result>
         </action>
+        <!--查询所有职务-->
         <action name="findPost" class="staffAction" method="findPost">
             <result name="success" type="json">
                 <param name="root">postList</param>
             </result>
         </action>
-
+        <!--高级查询 员工-->
         <action name="findStaff" class="staffAction" method="findStaff">
-            <result name="success" type="redirectAction">
-                <param name="actionName">staffs</param>
-            </result>
+            <result name="success">/pages/staff/listStaff.jsp</result>
         </action>
-
+        <!--编辑,回显 员工-->
         <action name="findById" class="staffAction" method="findById">
             <result name="success">/pages/staff/editStaff.jsp</result>
         </action>
-
+        <action name="addStaff" class="staffAction" method="addStaff">
+            <result>/pages/staff/addStaff.jsp</result>
+        </action>
+        <!--保存/修改 员工-->
         <action name="staffSaveOrUpdate" class="staffAction" method="saveOrUpdate">
             <result name="success" type="redirectAction">staffs</result>
         </action>
-
+        <!--修改密码-->
         <action name="modPwd" class="staffAction" method="modPwd">
-            <result name="success" type="redirect">/pages/staff/index.jsp</result>
+            <result name="success" type="redirect">/pages/login.jsp</result>
             <result name="input">/pages/staff/updPwd.jsp</result>
             <result name="error">/pages/staff/updPwd.jsp</result>
         </action>

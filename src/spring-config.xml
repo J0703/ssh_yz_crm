@@ -54,40 +54,40 @@
 
 
     <!--人力资源部-->
-    <bean id="departmentDao" class="com.lanou.staff.dao.impl.DepartmentDaoImpl">
+    <bean id="departmentDao" class="com.lanou.hrd.dao.impl.DepartmentDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="postDao" class="com.lanou.staff.dao.impl.PostDaoImpl">
+    <bean id="postDao" class="com.lanou.hrd.dao.impl.PostDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="staffDao" class="com.lanou.staff.dao.impl.StaffDaoImpl">
+    <bean id="staffDao" class="com.lanou.hrd.dao.impl.StaffDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="departmentService" class="com.lanou.staff.service.impl.DepartmentServiceImpl">
+    <bean id="departmentService" class="com.lanou.hrd.service.impl.DepartmentServiceImpl">
         <property name="departmentDao" ref="departmentDao"/>
     </bean>
 
-    <bean id="postService" class="com.lanou.staff.service.impl.PostServiceImpl">
+    <bean id="postService" class="com.lanou.hrd.service.impl.PostServiceImpl">
         <property name="postDao" ref="postDao"/>
     </bean>
-    <bean id="staffService" class="com.lanou.staff.service.impl.StaffServiceImpl">
+    <bean id="staffService" class="com.lanou.hrd.service.impl.StaffServiceImpl">
         <property name="staffDao" ref="staffDao"/>
     </bean>
 
 
     <!--教研部-->
-    <bean id="classesDao" class="com.lanou.teach.dao.impl.ClassesDaoImpl">
+    <bean id="classesDao" class="com.lanou.trd.dao.impl.ClassesDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean id="courseDao" class="com.lanou.teach.dao.impl.CourseDaoImpl">
+    <bean id="courseDao" class="com.lanou.trd.dao.impl.CourseDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean id="classesService" class="com.lanou.teach.service.impl.ClassesServiceImpl">
+    <bean id="classesService" class="com.lanou.trd.service.impl.ClassesServiceImpl">
         <property name="classesDao" ref="classesDao"/>
     </bean>
 
-    <bean id="courseService" class="com.lanou.teach.service.impl.CourseServiceImpl">
+    <bean id="courseService" class="com.lanou.trd.service.impl.CourseServiceImpl">
         <property name="courseDao" ref="courseDao"/>
     </bean>
 </beans>

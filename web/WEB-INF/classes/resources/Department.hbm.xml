@@ -2,7 +2,7 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.lanou.staff.domain.Department" table="crm_department">
+    <class name="com.lanou.hrd.domain.Department" table="crm_department">
         <id name="depID" column="depId">
             <generator class="uuid"/>
         </id>
@@ -14,7 +14,7 @@
 
             <key column="depId"/>
 
-            <one-to-many class="com.lanou.staff.domain.Post"/>
+            <one-to-many class="com.lanou.hrd.domain.Post"/>
         </set>
     </class>
 </hibernate-mapping>

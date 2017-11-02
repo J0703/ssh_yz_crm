@@ -33,7 +33,7 @@
                 }
             </script>
             <%--员工注入 --%>
-            <a href="${pageContext.request.contextPath}/pages/staff/addStaff.jsp">
+            <a href="${pageContext.request.contextPath}/addStaff.action">
                 <img src="${pageContext.request.contextPath}/images/button/tianjia.gif"/>
             </a>
 
@@ -110,7 +110,8 @@
 
             </td>
             <td width="80px">姓名：</td>
-            <td width="200px"><input type="text" name="staffName" size="12"/></td>
+            <td width="200px"><input type="text" name="staffName" size="12" value="请输入关键字" onblur="if (value =='') {value='请输入关键字'}"
+             onfocus="if (value == '请输入关键字'){value =''}"/></td>
             <td></td>
         </tr>
     </table>
@@ -133,7 +134,7 @@
         <td width="10%" align="center">编辑</td>
     </tr>
 
-    <s:iterator value="#session.staffs" var="staff" status="st">
+    <s:iterator value="#attr.staffs" var="staff" status="st">
         <s:if test="#st.Even">
             <tr class="tabtd1">
         </s:if>

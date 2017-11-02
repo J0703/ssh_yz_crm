@@ -103,8 +103,6 @@ public class StaffAction extends ActionSupport implements ModelDriven<Staff> {
         sta.setLoginPwd(newPassword);
         staffService.saveOrUpdate(sta);
         return SUCCESS;
-
-
     }
 
     @Override

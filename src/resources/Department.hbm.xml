@@ -7,6 +7,7 @@
             <generator class="uuid"/>
         </id>
         <property name="depName" length="50"/>
+
         <set name="posts"
              inverse="true"
              lazy="false"

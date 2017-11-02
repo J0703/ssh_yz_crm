@@ -11,4 +11,5 @@
         <property name="courseName"/>
         <property name="remark"/>
     </class>
+
 </hibernate-mapping>

@@ -78,7 +78,6 @@ public class PostAction extends ActionSupport implements ModelDriven<Post>{
         return SUCCESS;
     }
 
-
     @Override
     public Post getModel() {
         post = new Post();

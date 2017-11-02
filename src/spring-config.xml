@@ -63,10 +63,10 @@
     <bean id="staffDao" class="com.lanou.hrd.dao.impl.StaffDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
     <bean id="departmentService" class="com.lanou.hrd.service.impl.DepartmentServiceImpl">
         <property name="departmentDao" ref="departmentDao"/>
     </bean>
-
     <bean id="postService" class="com.lanou.hrd.service.impl.PostServiceImpl">
         <property name="postDao" ref="postDao"/>
     </bean>

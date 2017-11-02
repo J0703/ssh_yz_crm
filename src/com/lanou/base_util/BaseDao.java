@@ -32,7 +32,6 @@ public interface BaseDao<T> {
      * 根据主键id 查询某个对象
      * @param id  要查询的主键 id
      */
-
     T findById(Serializable id);
 
 

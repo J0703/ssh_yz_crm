@@ -7,6 +7,7 @@
             <generator class="uuid"/>
         </id>
         <property name="postName" length="100"/>
+
         <many-to-one name="department" class="com.lanou.hrd.domain.Department" column="depId" lazy="false"/>
     </class>
 </hibernate-mapping>

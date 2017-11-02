@@ -45,5 +45,4 @@ public class DepartTest {
         service.save(department4);
 
     }
-
 }

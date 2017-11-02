@@ -6,7 +6,9 @@
         <id name="classId">
             <generator class="uuid"/>
         </id>
+
         <many-to-one name="course" class="com.lanou.trd.domain.Course" column="courseTypeId" lazy="false"/>
+
         <property name="name"/>
         <property name="beginTime"/>
         <property name="endTime"/>

@@ -9,4 +9,5 @@ import com.lanou.hrd.domain.Staff;
  */
 public class StaffDaoImpl extends BaseDaoImpl<Staff> implements StaffDao {
 
+
 }

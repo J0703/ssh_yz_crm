@@ -79,7 +79,6 @@ public class ClassesAction extends ActionSupport implements ModelDriven<Classes>
         return SUCCESS;
     }
 
-
     @Override
     public Classes getModel() {
         classes = new Classes();

@@ -19,6 +19,7 @@ public class LoginInterceptor extends MethodFilterInterceptor {
             ServletActionContext.getRequest().setAttribute("msg","您未登录,请先登录!");
             return Action.LOGIN;
         }
+
         return actionInvocation.invoke();
     }
 }

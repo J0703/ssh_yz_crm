@@ -7,4 +7,5 @@ import com.lanou.trd.domain.Classes;
  * Created by dllo on 17/10/31.
  */
 public interface ClassesDao extends BaseDao<Classes> {
+
 }

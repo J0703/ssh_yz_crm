@@ -16,6 +16,7 @@ public class PostActionInterceptor extends MethodFilterInterceptor {
         if (!staff.getPost().getPostId().equals("2c9090da5f76a5d5015f7762f4670001")){
             return "pass";
         }
+
         return actionInvocation.invoke();
     }
 }

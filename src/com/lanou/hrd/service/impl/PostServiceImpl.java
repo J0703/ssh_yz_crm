@@ -27,7 +27,6 @@ public class PostServiceImpl implements PostService {
         postDao.saveOrUpdate(post);
     }
 
-
     public PostDao getPostDao() {
         return postDao;
     }

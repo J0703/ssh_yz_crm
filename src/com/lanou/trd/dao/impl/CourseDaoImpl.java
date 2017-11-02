@@ -8,4 +8,5 @@ import com.lanou.trd.domain.Course;
  * Created by dllo on 17/10/31.
  */
 public class CourseDaoImpl extends BaseDaoImpl<Course> implements CourseDao {
+
 }
